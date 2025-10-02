@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>🎬 Termitoon</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #ff4d4d; /* بک‌گراند قرمز */
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px #800000;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 20px 40px;
+      margin: 10px;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #ff6666, #cc0000);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      background: linear-gradient(45deg, #cc0000, #ff6666);
+    }
+  </style>
+  <script>
+    // ← اینجا لینک ویدیوتو قرار بده
+    var videoLink = "http://peer.tct.149.giftmond.ir/morteza_movie/Strange.Magic.2015.720p.WEB-DL.Farsi.Dubbed.mkv";
+    // برای هر ویدیو جدید فقط همین لینک رو عوض کن
+
+    window.onload = function() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/iPhone|iPad|iPod/i.test(userAgent)) {
+        window.location.href = "vlc://" + videoLink;
+      } else if (/android/i.test(userAgent)) {
+        window.location.href = videoLink;
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>Termitoon</h1>
+  <p>اگر خودکار باز نشد، از دکمه‌های زیر استفاده کنید:</p>
+
+  <!-- ← لینک آیفون / VLC -->
+  <a class="btn" href="vlc://http://peer.tct.149.giftmond.ir/morteza_movie/Strange.Magic.2015.720p.WEB-DL.Farsi.Dubbed.mkv">
+    ▶️ باز کردن در VLC (iOS)
+  </a>
+
+  <!-- ← لینک اندروید / دانلود -->
+  <a class="btn" href="http://peer.tct.149.giftmond.ir/morteza_movie/Strange.Magic.2015.720p.WEB-DL.Farsi.Dubbed.mkv">
+    ⬇️ دانلود / باز کردن با پلیر (Android)
+  </a>
+</body>
+</html>
