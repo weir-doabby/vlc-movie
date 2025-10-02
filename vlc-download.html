@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>دانلود VLC</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #0066cc;
+      color: white;
+      text-decoration: none;
+      font-size: 1.2em;
+      border-radius: 8px;
+      margin: 10px;
+    }
+    .btn:hover { background-color: #0055a3; }
+  </style>
+  <script>
+    window.onload = function() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      if (/iPhone|iPad|iPod/i.test(userAgent)) {
+        window.location.href = "https://apps.apple.com/app/vlc-for-mobile/id650377962";
+      } else if (/android/i.test(userAgent)) {
+        window.location.href = "https://play.google.com/store/apps/details?id=org.videolan.vlc";
+      } else {
+        alert("لطفاً با موبایل خود باز کنید تا لینک دانلود VLC باز شود.");
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>📥 دانلود VLC</h1>
+  <p>اگر لینک به طور خودکار باز نشد، روی دکمه زیر بزن:</p>
+  <a class="btn" href="https://apps.apple.com/app/vlc-for-mobile/id650377962">VLC برای آیفون</a>
+  <a class="btn" href="https://play.google.com/store/apps/details?id=org.videolan.vlc">VLC برای اندروید</a>
+</body>
+</html>
