@@ -1,0 +1,89 @@
+<!doctype html>
+</header>
+
+
+<div style="height:18px"></div>
+
+
+<div class="card">
+<div class="left">
+<label>آدرس فایل یا پخش‌جریان (http/https)</label>
+<input id="url" type="text" placeholder="مثال: http://example.com/movie.mkv" />
+<div class="actions">
+<button id="gen" class="btn primary micro">🎯 تولید لینک کوتاه</button>
+<button id="previewBtn" class="btn ghost micro">🔍 پیش‌نمایش</button>
+</div>
+
+
+<div id="result" style="margin-top:12px;display:none;">
+<div class="shareRow">
+<div class="shareField">
+<input id="shareUrl" readonly />
+<button id="copyBtn" class="btn micro">کپی</button>
+</div>
+<button id="shareBtn" class="btn micro">اشتراک</button>
+</div>
+
+
+<div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+<a id="openVlc" class="vbtn" href="#">▶️ باز در VLC</a>
+<a id="direct" href="#" class="btn micro">⬇ دانلود مستقیم</a>
+</div>
+</div>
+</div>
+
+
+<div class="preview">
+<div class="media shimmer" id="metaBox">پیش‌نمایش فایل و متادیتا</div>
+</div>
+</div>
+
+
+<footer>ساخته شده با ❤️ — می‌توانید آن را به دلخواه خود سفارشی کنید.</footer>
+</div>
+
+
+<script>
+const gen = document.getElementById('gen');
+const urlInput = document.getElementById('url');
+const result = document.getElementById('result');
+const shareUrl = document.getElementById('shareUrl');
+const copyBtn = document.getElementById('copyBtn');
+const shareBtn = document.getElementById('shareBtn');
+const openVlc = document.getElementById('openVlc');
+const direct = document.getElementById('direct');
+const metaBox = document.getElementById('metaBox');
+
+
+function isValidUrl(s){ try { new URL(s); return true } catch(e){return false} }
+
+
+gen.addEventListener('click', async ()=>{
+const url = urlInput.value.trim();
+if(!isValidUrl(url)){ alert('لطفا یک آدرس معتبر وارد کنید'); return }
+
+
+gen.disabled = true; gen.textContent = 'درحال ساخت...';
+try{
+const resp = await fetch('/api/links', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+const data = await resp.json();
+if(data.shareUrl){
+result.style.display='block';
+shareUrl.value = data.shareUrl;
+openVlc.href = `vlc://${url}`; // لینک برای باز کردن در VLC
+direct.href = url;
+metaBox.textContent = 'آیدی: ' + data.id + ' — آمادهٔ اشتراک';
+} else {
+alert('خطا در سرور');
+}
+}catch(e){ alert('خطا: '+e.message) }
+gen.disabled=false; gen.textContent='🎯 تولید لینک کوتاه';
+});
+
+
+copyBtn.addEventListener('click', ()=>{ navigator.clipboard.writeText(shareUrl.value).then(()=>{copyBtn.textContent='کپی شد'; setTimeout(()=>copyBtn.textContent='کپی',1500)}) });
+
+
+shareBtn.addEventListener('click', ()=>{
+if(navigator.share){ navigator.share({title:'لینک ویدیو',text:'لینک ویدیو',url:shareUrl.value}) }
+else {
