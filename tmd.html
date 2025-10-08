@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پخش در VLC</title>
+<style>
+body {
+  background: #0f0f0f;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  padding-top: 100px;
+}
+button {
+  background: linear-gradient(135deg, #ff6600, #ff4500);
+  border: none;
+  color: white;
+  padding: 15px 30px;
+  font-size: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ff4500, #ff6600);
+}
+p {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+</style>
+</head>
+<body>
+
+<h2>🎬 پخش در VLC</h2>
+<button onclick="openVLC()">باز کردن در VLC</button>
+<p id="status"></p>
+
+<script>
+function openVLC() {
+  const stream = "http://peer.tci.229.giftmond.ir/filmjaded/Ralph.Breaks.the.Internet.2018.720p.Farsi.Dubbed.v1.mkv";
+  const ua = navigator.userAgent.toLowerCase();
+  const status = document.getElementById("status");
+  let link = "";
+
+  if (/iphone|ipad|ipod/.test(ua)) {
+    // iOS Safari
+    link = "vlc://" + stream;
+    status.innerText = "اگر Safari از شما پرسید، گزینه «Open in VLC» را بزنید.";
+  } else if (/android/.test(ua)) {
+    // Android
+    link = "intent://" + stream.replace("http://", "") +
+      "#Intent;scheme=http;package=org.videolan.vlc;type=video/mp4;end";
+    status.innerText = "اگر مرورگر اجازه نداد، از Firefox یا Samsung Internet استفاده کنید.";
+  } else {
+    // Desktop browsers
+    link = "vlc://" + stream;
+    status.innerText = "اگر باز نشد، فایل را دانلود و با VLC اجرا کنید.";
+  }
+
+  // باز کردن لینک
+  window.location.href = link;
+
+  // بعد از 2 ثانیه fallback به دانلود
+  setTimeout(() => {
+    status.innerHTML += `<br><br>اگر VLC باز نشد، <a href="${stream}" download style="color:#ff6600;">اینجا کلیک کنید تا دانلود شود.</a>`;
+  }, 2000);
+}
+</script>
+
+</body>
+</html>
